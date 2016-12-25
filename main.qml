@@ -10,22 +10,14 @@ Window {
 	height: 480
 	title: qsTr("Jarvis 0.0")
 
-	SpeechAPI{
-		id: __speechAPI
-
-		onResultsChanged: {
-			__debigPanel.text = results
-		}
+    Jarvis{
+        id: __jarvis
 	}
 
 	Text {
 		id: __debigPanel
 
 		anchors.centerIn: parent
-	}
-
-	Component.onCompleted: {
-		__speechAPI.start()
 	}
 
 }

@@ -9,17 +9,19 @@ class VoiceEngine: QObject{
 	Q_OBJECT
 private:
 	QString m_language;
-	QMediaPlaylist *m_playlist;
 	QMediaPlayer *m_player;
-	QString m_url;
+    QNetworkAccessManager *m_manager;
+
 public:
 	VoiceEngine(QString language);
 	void setLanguage(QString language);
-	Q_INVOKABLE void speech(QString text);
+    Q_INVOKABLE void say(QString text);
 
 private slots:
 	void errorSlot();
 	void state(QMediaPlayer::State state);
+    void finished();
+
 signals:
 	void stopped();
 	void error();

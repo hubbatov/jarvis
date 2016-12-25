@@ -1,11 +1,15 @@
 TEMPLATE = app
 
-QT += qml quick network multimedia
+QT += qml quick network multimedia xml
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    speechrecognition.cpp \
-    voiceengine.cpp
+    voiceengine.cpp \
+    earsengine.cpp \
+    jarvis.cpp \
+    ears.cpp \
+    voiceprocessor.cpp \
+    configuration.cpp
 
 RESOURCES += qml.qrc
 
@@ -32,5 +36,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    speechrecognition.h \
-    voiceengine.h
+    voiceengine.h \
+    earsengine.h \
+    jarvis.h \
+    ears.h \
+    voiceprocessor.h \
+    configuration.h

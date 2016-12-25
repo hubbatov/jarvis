@@ -4,22 +4,19 @@
 
 #include <QGuiApplication>
 
-#include "voiceengine.h"
-#include "speechrecognition.h"
+#include "jarvis.h"
 
 int main(int argc, char *argv[])
 {
 	QGuiApplication app(argc, argv);
 
-	QQmlApplicationEngine engine;
-
-	VoiceEngine voice("ru-RU");
-	voice.speech(QString::fromUtf8("Привет"));
-
-	qmlRegisterType<SpeechRecognition>("hubbatov.jarvis", 1, 0, "SpeechAPI");
-
-	engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-
+#if 0
+    QQmlApplicationEngine engine;
+    qmlRegisterType<Jarvis>("hubbatov.jarvis", 1, 0, "Jarvis");
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+#else
+    Jarvis j;
+#endif
 	int retCode = app.exec();
 
 	return retCode;
