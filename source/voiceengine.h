@@ -13,7 +13,7 @@ private:
     QNetworkAccessManager *m_manager;
 
 public:
-	VoiceEngine(QString language);
+	VoiceEngine(QString language, QObject *parent = 0);
 	void setLanguage(QString language);
     Q_INVOKABLE void say(QString text);
 

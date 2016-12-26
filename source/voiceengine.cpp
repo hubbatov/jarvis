@@ -3,7 +3,7 @@
 #include "voiceengine.h"
 #include "configuration.h"
 
-VoiceEngine::VoiceEngine(QString language){
+VoiceEngine::VoiceEngine(QString language, QObject *parent) : QObject(parent){
 
     m_manager = new QNetworkAccessManager(this);
 	m_language = language;
