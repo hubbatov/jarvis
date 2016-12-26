@@ -22,11 +22,6 @@ Jarvis::~Jarvis(){
 	Configuration::destroy();
 }
 
-void Jarvis::processVoiceRequest(const QString &filename){
-	qDebug() << "...processing request";
-	m_pVoice->recognize(filename);
-}
-
 void Jarvis::reactionOnText(const QString &text){
 	qDebug() << "...matched text: " << text;
 
@@ -37,8 +32,7 @@ void Jarvis::reactionOnText(const QString &text){
 
 void Jarvis::createEars(){
 	m_pEars = new Ears(this);
-
-	connect(m_pEars, SIGNAL(understood(QString)), this, SLOT(processVoiceRequest(QString)));
+	connect(m_pEars, SIGNAL(understood(QString)), m_pVoice, SLOT(recognize(QString)));
 }
 
 void Jarvis::createVoice(){

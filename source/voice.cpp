@@ -42,9 +42,6 @@ void Voice::recognize(const QString &filename){
 	connect(reply, SIGNAL(matchedText()), this, SLOT(replyFinished()));
 }
 
-void Voice::cancel(){
-}
-
 void Voice::say(const QString &text){
 	m_pVoiceEngine->say(text);
 }

@@ -1,4 +1,5 @@
 #include <QDir>
+#include <QTextCodec>
 
 #include "configuration.h"
 

@@ -18,7 +18,6 @@ public:
 	~Jarvis();
 
 private slots:
-	void processVoiceRequest(const QString &filename);
 	void reactionOnText(const QString &text);
 
 private:

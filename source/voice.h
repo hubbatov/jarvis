@@ -20,9 +20,6 @@ public:
 
 	QString results()const;
 
-	Q_INVOKABLE void recognize(const QString &filename);
-	Q_INVOKABLE void cancel();
-
 	Q_INVOKABLE void say(const QString &text);
 
 	void setResults(const QString &results);
@@ -30,6 +27,9 @@ public:
 signals:
 	void matchedText(const QString &matchedString);
 	void resultsChanged();
+
+public slots:
+	void recognize(const QString &filename);
 
 private slots:
 	void replyFinished();
