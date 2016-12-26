@@ -17,8 +17,7 @@ Jarvis::Jarvis(QObject *parent) : QObject(parent){
 	createBrain();
 
 	m_pVoice->say(m_pBrain->vocabulary()->greeting());
-
-	test();
+	//test();
 }
 
 Jarvis::~Jarvis(){
@@ -38,6 +37,11 @@ void Jarvis::reactionOnText(const QString &text){
 
 	if(m_pBrain->isJarvisName(text)){
 		m_pVoice->say(m_pBrain->vocabulary()->yes());
+		m_pBrain->payAttention();
+	}
+
+	if(m_pBrain->isListening()){
+		//...process commands here if Jarvis is listen to you
 	}
 }
 

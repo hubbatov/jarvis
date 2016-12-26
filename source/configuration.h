@@ -11,6 +11,7 @@ public:
 
 	static QString language();
 	static QString apiKey();
+	static int attentionSeconds();
 
 	static void fetchConfiguration();
 	static void destroy();

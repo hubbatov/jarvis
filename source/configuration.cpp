@@ -54,6 +54,12 @@ QString Configuration::apiKey(){
 	return QString();
 }
 
+int Configuration::attentionSeconds(){
+	if(m_settings)
+		return m_settings->value("api/attention").toString();
+	return QString();
+}
+
 void Configuration::fetchConfiguration(){
 	m_settings = new QSettings(pathToConfig, QSettings::IniFormat);
 }
@@ -93,4 +99,3 @@ QStringList Configuration::fails(){
 QStringList Configuration::errors(){
 	return valuesList("error");
 }
-

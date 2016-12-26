@@ -13,6 +13,7 @@
 	[api]
 	language=ru-RU
 	key=<ваш API-ключ из кабинета разработчика Yandex>
+	attention=60
 
 	[jarvis-names]
 	value1=name1

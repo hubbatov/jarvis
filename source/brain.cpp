@@ -1,8 +1,11 @@
 #include "brain.h"
 #include "vocabulary.h"
+#include "configuration.h"
 
 Brain::Brain(QObject *parent) : QObject(parent){
 	m_pVocabulary = new Vocabulary;
+	m_attentionTimer.setInterval(Configuration::attentionSeconds() * 1000);
+	m_attentionTimer.setSingleShot(true);
 }
 
 Brain::~Brain(){
@@ -33,6 +36,14 @@ bool Brain::isGreeting(const QString &request){
 	return false;
 }
 
+bool Brain::isCommand(const QString &request){
+	return false;
+}
+
+bool Brain::isListening(){
+	return m_attentionTimer.isActive();
+}
+
 QStringList Brain::toRequests(const QString &request){
 	QStringList requests;
 	if(request.contains(","))
@@ -44,6 +55,11 @@ QStringList Brain::toRequests(const QString &request){
 
 Vocabulary *Brain::vocabulary() const{
 	return m_pVocabulary;
+}
+
+void Brain::payAttention(){
+	m_attention = true;
+	m_attentionTimer.start();
 }
 
 
