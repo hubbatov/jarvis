@@ -17,6 +17,8 @@ public:
 	Jarvis(QObject *parent = nullptr);
 	~Jarvis();
 
+	void test();
+
 private slots:
 	void reactionOnText(const QString &text);
 

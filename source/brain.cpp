@@ -1,23 +1,18 @@
-#include <QDateTime>
-
 #include "brain.h"
-#include "configuration.h"
+#include "vocabulary.h"
 
 Brain::Brain(QObject *parent) : QObject(parent){
-	m_selfNames = Configuration::names();
-	m_ownerNames = Configuration::ownerNames();
-	m_greetings = Configuration::greetings();
-	m_accepts = Configuration::accepts();
-	m_rejects = Configuration::rejects();
+	m_pVocabulary = new Vocabulary;
 }
 
 Brain::~Brain(){
+	delete m_pVocabulary;
 }
 
-bool Brain::isName(const QString &request){
-	QStringList requests = parseRequest(request);
+bool Brain::isJarvisName(const QString &request){
+	QStringList requests = toRequests(request);
 
-	foreach (QString name, m_selfNames) {
+	foreach (QString name, m_pVocabulary->selfNames()) {
 		foreach (QString supposedName, requests) {
 			if(name == supposedName)
 				return true;
@@ -26,10 +21,10 @@ bool Brain::isName(const QString &request){
 	return false;
 }
 
-bool Brain::isGreetingString(const QString &request){
-	QStringList requests = parseRequest(request);
+bool Brain::isGreeting(const QString &request){
+	QStringList requests = toRequests(request);
 
-	foreach (QString greet, m_greetings) {
+	foreach (QString greet, m_pVocabulary->greetings()) {
 		foreach (QString supposedGreeting, requests) {
 			if(greet == supposedGreeting)
 				return true;
@@ -38,28 +33,7 @@ bool Brain::isGreetingString(const QString &request){
 	return false;
 }
 
-QString Brain::greetingToOwner(){
-	srand(QDateTime::currentDateTime().time().msecsSinceStartOfDay());
-
-	int greetIndex = (int) (rand() % m_greetings.size());
-	int ownerIndex = (int) (rand() % m_ownerNames.size());
-
-	return m_greetings[greetIndex] + "," + m_ownerNames[ownerIndex];
-}
-
-QString Brain::yesString(){
-	srand(QDateTime::currentDateTime().time().msecsSinceStartOfDay());
-	int index = (int) (rand() % m_accepts.size());
-	return m_accepts[index];
-}
-
-QString Brain::noString(){
-	srand(QDateTime::currentDateTime().time().msecsSinceStartOfDay());
-	int index = (int) (rand() % m_rejects.size());
-	return m_rejects[index];
-}
-
-QStringList Brain::parseRequest(const QString &request){
+QStringList Brain::toRequests(const QString &request){
 	QStringList requests;
 	if(request.contains(","))
 		requests = request.split(",");
@@ -67,5 +41,11 @@ QStringList Brain::parseRequest(const QString &request){
 
 	return requests;
 }
+
+Vocabulary *Brain::vocabulary() const{
+	return m_pVocabulary;
+}
+
+
 
 

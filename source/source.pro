@@ -10,7 +10,8 @@ SOURCES += main.cpp \
     ears.cpp \
     configuration.cpp \
     brain.cpp \
-    voice.cpp
+    voice.cpp \
+    vocabulary.cpp
 
 RESOURCES += qml.qrc
 
@@ -43,4 +44,5 @@ HEADERS += \
     ears.h \
     configuration.h \
     brain.h \
-    voice.h
+    voice.h \
+    vocabulary.h

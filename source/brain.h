@@ -2,7 +2,8 @@
 #define BRAIN_H
 
 #include <QObject>
-#include <QStringList>
+
+class Vocabulary;
 
 class Brain : public QObject {
 
@@ -12,22 +13,17 @@ public:
 	Brain(QObject *parent = 0);
 	~Brain();
 
-	bool isName(const QString &request);
-	bool isGreetingString(const QString &request);
+	bool isJarvisName(const QString &request);
+	bool isGreeting(const QString &request);
 
-	QString greetingToOwner();
-	QString yesString();
-	QString noString();
+	Vocabulary* vocabulary() const;
 
 protected:
-	QStringList parseRequest(const QString &request);
+	QStringList toRequests(const QString &request);
 
 private:
-	QStringList m_selfNames;
-	QStringList m_ownerNames;
-	QStringList m_greetings;
-	QStringList m_accepts;
-	QStringList m_rejects;
+	bool m_attention;
+	Vocabulary* m_pVocabulary;
 
 };
 

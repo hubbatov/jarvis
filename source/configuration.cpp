@@ -81,3 +81,16 @@ QStringList Configuration::accepts(){
 QStringList Configuration::rejects(){
 	return valuesList("rejects");
 }
+
+QStringList Configuration::successes(){
+	return valuesList("success");
+}
+
+QStringList Configuration::fails(){
+	return valuesList("fail");
+}
+
+QStringList Configuration::errors(){
+	return valuesList("error");
+}
+

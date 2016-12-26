@@ -20,6 +20,9 @@ public:
 	static QStringList greetings();
 	static QStringList accepts();
 	static QStringList rejects();
+	static QStringList successes();
+	static QStringList fails();
+	static QStringList errors();
 
 private:
 	static QStringList valuesList(const QString &section);

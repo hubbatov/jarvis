@@ -8,19 +8,22 @@
 class VoiceEngine: QObject{
 	Q_OBJECT
 private:
+	QStringList m_toSayList;
 	QString m_language;
 	QMediaPlayer *m_player;
-    QNetworkAccessManager *m_manager;
+	QNetworkAccessManager *m_manager;
+	bool m_busy;
 
 public:
 	VoiceEngine(QString language, QObject *parent = 0);
 	void setLanguage(QString language);
-    Q_INVOKABLE void say(QString text);
+	Q_INVOKABLE void say(QString text);
 
 private slots:
-	void errorSlot();
+	void mediaStateChanged(QMediaPlayer::State state);
 	void state(QMediaPlayer::State state);
-    void finished();
+	void audioReceived();
+	void sayNext();
 
 signals:
 	void stopped();
