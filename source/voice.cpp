@@ -17,7 +17,7 @@ QString Voice::url = "http://asr.yandex.net/asr_xml?uuid=%1&topic=queries&lang=%
 Voice::Voice(QObject* parent)
 	: QObject(parent){
 	m_pNetworkManager = new QNetworkAccessManager(this);
-	m_pVoiceEngine = new VoiceEngine(Configuration::language(), this);
+	m_pVoiceEngine = new VoiceEngine(this);
 }
 
 void Voice::recognize(const QString &filename){

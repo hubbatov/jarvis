@@ -9,14 +9,13 @@ class VoiceEngine: QObject{
 	Q_OBJECT
 private:
 	QStringList m_toSayList;
-	QString m_language;
 	QMediaPlayer *m_player;
 	QNetworkAccessManager *m_manager;
 	bool m_busy;
 
 public:
-	VoiceEngine(QString language, QObject *parent = 0);
-	void setLanguage(QString language);
+	VoiceEngine(QObject *parent = 0);
+
 	Q_INVOKABLE void say(QString text);
 
 private slots:

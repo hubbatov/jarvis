@@ -9,28 +9,28 @@ class QAudioRecorder;
 
 class Ears : public QObject{
 
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    Ears(QObject* parent = nullptr);
-    ~Ears();
+	Ears(QObject* parent = nullptr);
+	~Ears();
 
 private slots:
-    void listenMore();
-    void soundDetected();
-    void recordMade();
+	void listenMore();
+	void soundDetected();
+	void recordMade();
 
 private:
-    void createEarsEngine();
+	void createEarsEngine();
 
 signals:
-    void understood(const QString &filename);
+	void understood(const QString &filename);
 
 private:
-    QAudioRecorder *m_pRecorder;
-    EarsEngine* m_pEarsEngine;
-    QAudioInput* m_pEars;
-    QByteArray m_earsBuffer;
+	QAudioRecorder *m_pRecorder;
+	EarsEngine* m_pEarsEngine;
+	QAudioInput* m_pEars;
+	QByteArray m_earsBuffer;
 };
 
 #endif // EARS_H

@@ -56,8 +56,8 @@ QString Configuration::apiKey(){
 
 int Configuration::attentionSeconds(){
 	if(m_settings)
-		return m_settings->value("api/attention").toString();
-	return QString();
+		return m_settings->value("api/attention").toInt();
+	return 60;
 }
 
 void Configuration::fetchConfiguration(){

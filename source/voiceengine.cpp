@@ -3,20 +3,15 @@
 #include "voiceengine.h"
 #include "configuration.h"
 
-VoiceEngine::VoiceEngine(QString language, QObject *parent) : QObject(parent){
+VoiceEngine::VoiceEngine(QObject *parent) : QObject(parent){
 
 	m_busy = false;
 	m_manager = new QNetworkAccessManager(this);
-	m_language = language;
 	m_player = new QMediaPlayer(this, QMediaPlayer::StreamPlayback);
 	m_player->setVolume(100);
 
 	QObject::connect(m_player, SIGNAL(stateChanged(QMediaPlayer::State)),
 					 this, SLOT(mediaStateChanged(QMediaPlayer::State)));
-}
-
-void VoiceEngine::setLanguage(QString language){
-	m_language = language;
 }
 
 void VoiceEngine::say(QString text){
@@ -34,7 +29,7 @@ void VoiceEngine::sayNext(){
 
 	QString path = QString("https://tts.voicetech.yandex.net/generate?text=%1&format=mp3&lang=%2&speaker=zahar&key=%3")
 			.arg(text)
-			.arg(m_language)
+			.arg(Configuration::language())
 			.arg(Configuration::apiKey());
 
 	qDebug() << path;

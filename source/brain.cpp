@@ -58,7 +58,6 @@ Vocabulary *Brain::vocabulary() const{
 }
 
 void Brain::payAttention(){
-	m_attention = true;
 	m_attentionTimer.start();
 }
 
