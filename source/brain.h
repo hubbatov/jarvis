@@ -24,11 +24,13 @@ public:
 
 public slots:
 	void payAttention();
+    void sleep();
 
 protected:
 	QStringList toRequests(const QString &request);
 
 private:
+    bool m_attention;
 	QTimer m_attentionTimer;
 	Vocabulary* m_pVocabulary;
 

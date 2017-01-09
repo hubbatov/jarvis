@@ -27,7 +27,7 @@ void VoiceEngine::sayNext(){
 
 	QString text = m_toSayList.first();
 
-	QString path = QString("https://tts.voicetech.yandex.net/generate?text=%1&format=mp3&lang=%2&speaker=zahar&key=%3")
+    QString path = QString("https://tts.voicetech.yandex.net/generate?text=%1&format=mp3&lang=%2&emotion=good&speaker=zahar&key=%3")
 			.arg(text)
 			.arg(Configuration::language())
 			.arg(Configuration::apiKey());

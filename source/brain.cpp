@@ -1,11 +1,13 @@
+#include <QDebug>
+
 #include "brain.h"
 #include "vocabulary.h"
 #include "configuration.h"
 
 Brain::Brain(QObject *parent) : QObject(parent){
 	m_pVocabulary = new Vocabulary;
-	m_attentionTimer.setInterval(Configuration::attentionSeconds() * 1000);
 	m_attentionTimer.setSingleShot(true);
+    connect(&m_attentionTimer, SIGNAL(timeout()), this, SLOT(sleep()));
 }
 
 Brain::~Brain(){
@@ -41,7 +43,7 @@ bool Brain::isCommand(const QString &request){
 }
 
 bool Brain::isListening(){
-	return m_attentionTimer.isActive();
+    return m_attention;
 }
 
 QStringList Brain::toRequests(const QString &request){
@@ -58,7 +60,13 @@ Vocabulary *Brain::vocabulary() const{
 }
 
 void Brain::payAttention(){
-	m_attentionTimer.start();
+    m_attentionTimer.start(Configuration::attentionSeconds() * 1000);
+    m_attention = true;
+}
+
+void Brain::sleep(){
+    qDebug() << "...jarvis not listen anymore";
+    m_attention = false;
 }
 
 

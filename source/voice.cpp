@@ -39,7 +39,7 @@ void Voice::recognize(const QString &filename){
 	QFile *compressedFile = new QFile(filename);
 	compressedFile->open(QIODevice::ReadOnly);
 	QNetworkReply *reply = m_pNetworkManager->post(req, compressedFile);
-	connect(reply, SIGNAL(matchedText()), this, SLOT(replyFinished()));
+    connect(reply, SIGNAL(finished()), this, SLOT(replyFinished()));
 }
 
 void Voice::say(const QString &text){
