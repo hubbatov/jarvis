@@ -28,25 +28,14 @@ Ears::~Ears(){
 	m_pEarsEngine->stop();
 }
 
-void Ears::listenMore(){
-	if (!m_pEars)
-		return;
-
-	qint64 len = m_pEars->bytesReady();
-	if (len > SampleSize)
-		len = SampleSize;
-	qint64 l = m_pEarsEngine->read(m_earsBuffer.data(), len);
-	if (l > 0)
-		m_pEarsEngine->write(m_earsBuffer.constData(), l);
-}
-
 void Ears::soundDetected(){
 	if(m_pEarsEngine->level() > 0.5 && m_pRecorder->state() != QAudioRecorder::RecordingState){
+		qDebug() << "Please, say something";
 		m_pRecorder->record();
 		QString path = QString("%1/.jarvis/request.wav").arg(QDir::homePath());
 		m_pRecorder->setProperty("path", path);
 		m_pRecorder->setOutputLocation(QUrl::fromLocalFile(path));
-		QTimer::singleShot(3000, this, SLOT(recordMade()));
+		QTimer::singleShot(4000, this, SLOT(recordMade()));
 	}
 }
 
@@ -81,6 +70,5 @@ void Ears::createEarsEngine(){
 	m_pEars = new QAudioInput(format, this);
 	m_pEarsEngine->start();
 	m_pEars->start(m_pEarsEngine);
-	connect(m_pEarsEngine, SIGNAL(readyRead()), this, SLOT(listenMore()));
-	connect(m_pEarsEngine, SIGNAL(update()), SLOT(soundDetected()));
+    connect(m_pEarsEngine, SIGNAL(update()), SLOT(soundDetected()));
 }

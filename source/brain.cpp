@@ -4,10 +4,10 @@
 #include "vocabulary.h"
 #include "configuration.h"
 
-Brain::Brain(QObject *parent) : QObject(parent){
+Brain::Brain(QObject *parent) : QNetworkAccessManager(parent){
 	m_pVocabulary = new Vocabulary;
 	m_attentionTimer.setSingleShot(true);
-    connect(&m_attentionTimer, SIGNAL(timeout()), this, SLOT(sleep()));
+	connect(&m_attentionTimer, SIGNAL(timeout()), this, SLOT(sleep()));
 }
 
 Brain::~Brain(){
@@ -38,12 +38,8 @@ bool Brain::isGreeting(const QString &request){
 	return false;
 }
 
-bool Brain::isCommand(const QString &request){
-	return false;
-}
-
 bool Brain::isListening(){
-    return m_attention;
+	return m_attention;
 }
 
 QStringList Brain::toRequests(const QString &request){
@@ -60,15 +56,44 @@ Vocabulary *Brain::vocabulary() const{
 }
 
 void Brain::payAttention(){
-    m_attentionTimer.start(Configuration::attentionSeconds() * 1000);
-    m_attention = true;
+	m_attentionTimer.start(Configuration::attentionSeconds() * 1000);
+	m_attention = true;
 }
 
 void Brain::sleep(){
-    qDebug() << "...jarvis not listen anymore";
-    m_attention = false;
+	qDebug() << "...jarvis not listen anymore";
+	m_attention = false;
 }
 
+QString Brain::tryRecorgnizeCommand(const QString &text){
+	QStringList requests = toRequests(text);
 
+	foreach (const QString &request, requests) {
+		QString command = Configuration::commandType(request);
+		if(command != "undefined"){
+			return command;
+		}
+	}
+
+	return "";
+}
+
+bool Brain::doCommand(const QString &command){
+	QString cmd = command;
+
+	if(command.startsWith("post")){
+		QString postQuery = cmd.remove("post:");
+
+		QNetworkRequest request;
+		request.setUrl(QUrl::fromUserInput(postQuery));
+
+		QByteArray data;
+
+		QNetworkReply* reply = post(request, data);
+		return true;
+	}
+
+	return false;
+}
 
 

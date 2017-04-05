@@ -1,4 +1,5 @@
 #include <QDir>
+#include <QDebug>
 #include <QTextCodec>
 
 #include "configuration.h"
@@ -8,14 +9,15 @@ QString pathToConfig = configDir + "/" + "config.ini";
 
 QSettings* Configuration::m_settings = nullptr;
 
-QStringList Configuration::valuesList(const QString &section){
+QStringList Configuration::valuesList(const QString &section, const QString neededKey){
 	QStringList result;
 	if(Configuration::m_settings){
 		Configuration::m_settings->beginGroup(section);
 
 		QStringList keys = Configuration::m_settings->allKeys();
 		foreach (QString key, keys) {
-			result.append(Configuration::m_settings->value(key).toString());
+			if(neededKey.isEmpty() || key == neededKey)
+				result.append(Configuration::m_settings->value(key).toString());
 		}
 
 		Configuration::m_settings->endGroup();
@@ -38,6 +40,12 @@ void Configuration::checkConfig(){
 		conf.write(QByteArray("[jarvis-names]\n"));
 		conf.write(QByteArray("[your-names]\n"));
 		conf.write(QByteArray("[greetings]\n"));
+		conf.write(QByteArray("[accepts]\n"));
+		conf.write(QByteArray("[rejects]\n"));
+		conf.write(QByteArray("[fails]\n"));
+		conf.write(QByteArray("[errors]\n"));
+		conf.write(QByteArray("[commands]\n"));
+
 		conf.close();
 	}
 }
@@ -89,13 +97,29 @@ QStringList Configuration::rejects(){
 }
 
 QStringList Configuration::successes(){
-	return valuesList("success");
+	return valuesList("successes");
 }
 
 QStringList Configuration::fails(){
-	return valuesList("fail");
+	return valuesList("fails");
 }
 
 QStringList Configuration::errors(){
-	return valuesList("error");
+	return valuesList("errors");
+}
+
+QString Configuration::commandType(const QString &request){
+	m_settings->beginGroup("commands");
+	foreach (const QString &key, m_settings->allKeys()) {
+		QString value = m_settings->value(key).toString();
+
+		QStringList data = value.split("#");
+
+		if(data.last() == request && !request.isEmpty()){
+			m_settings->endGroup();
+			return data.first();
+		}
+	}
+	m_settings->endGroup();
+	return "undefined";
 }

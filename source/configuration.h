@@ -25,8 +25,10 @@ public:
 	static QStringList fails();
 	static QStringList errors();
 
+	static QString commandType(const QString &request);
+
 private:
-	static QStringList valuesList(const QString &section);
+	static QStringList valuesList(const QString &section, const QString neededKey = QString());
 
 	static QSettings *m_settings;
 

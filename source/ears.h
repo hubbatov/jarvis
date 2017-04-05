@@ -16,7 +16,6 @@ public:
 	~Ears();
 
 private slots:
-	void listenMore();
 	void soundDetected();
 	void recordMade();
 

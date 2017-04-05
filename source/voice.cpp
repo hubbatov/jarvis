@@ -31,8 +31,6 @@ void Voice::recognize(const QString &filename){
 						  .arg(Configuration::language())
 						  .arg(Configuration::apiKey()));
 
-	qDebug() << requestUrl.toString();
-
 	QNetworkRequest req(requestUrl);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, contentType);
 
@@ -55,10 +53,8 @@ void Voice::parseResponse(QIODevice* reply){
 	QString getReply ;
 	getReply = reply->readAll();
 
-	qDebug() << "The Reply " << getReply;
-
 	QDomDocument doc;
-	qDebug() << "Reply is XML:" << doc.setContent(getReply);
+	doc.setContent(getReply);
 
 	QStringList resultList;
 

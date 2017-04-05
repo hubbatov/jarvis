@@ -16,8 +16,8 @@ Jarvis::Jarvis(QObject *parent) : QObject(parent){
 	createEars();
 	createBrain();
 
-    m_pVoice->say(m_pBrain->vocabulary()->greeting());
-    //test();
+	m_pVoice->say(m_pBrain->vocabulary()->greeting());
+	//test();
 }
 
 Jarvis::~Jarvis(){
@@ -33,19 +33,24 @@ void Jarvis::test(){
 }
 
 void Jarvis::reactionOnText(const QString &text){
-    qDebug() << "...matched text: " << text << ", jarvis listen:" << m_pBrain->isListening();
+	qDebug() << "...matched text: " << text << ", jarvis listen:" << m_pBrain->isListening();
 
 	if(m_pBrain->isJarvisName(text)){
 		m_pVoice->say(m_pBrain->vocabulary()->yes());
 		m_pBrain->payAttention();
 
-    }else if(m_pBrain->isListening()){
+	}else if(m_pBrain->isListening()){
 		//...process commands here if Jarvis is listen to you
-        if(text == "сколько время"){
-            m_pVoice->say(QString("Сейчас ") + QDateTime::currentDateTime().time().toString("hh:mm"));
-        }else {
-            m_pVoice->say(m_pBrain->vocabulary()->error());
-        }
+		QString command = m_pBrain->tryRecorgnizeCommand(text);
+		if(!command.isEmpty()){
+			if(m_pBrain->doCommand(command)){
+				m_pVoice->say(m_pBrain->vocabulary()->success());
+			}else{
+				m_pVoice->say(m_pBrain->vocabulary()->fail());
+			}
+		}else{
+			m_pVoice->say(m_pBrain->vocabulary()->error());
+		}
 	}
 }
 

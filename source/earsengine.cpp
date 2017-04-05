@@ -64,7 +64,7 @@ EarsEngine::~EarsEngine(){
 }
 
 void EarsEngine::start(){
-	open(QIODevice::WriteOnly);
+    open(QIODevice::ReadWrite);
 }
 
 void EarsEngine::stop(){

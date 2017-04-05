@@ -4,9 +4,13 @@
 #include <QTimer>
 #include <QObject>
 
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QNetworkAccessManager>
+
 class Vocabulary;
 
-class Brain : public QObject {
+class Brain : public QNetworkAccessManager {
 
 	Q_OBJECT
 
@@ -16,11 +20,12 @@ public:
 
 	bool isJarvisName(const QString &request);
 	bool isGreeting(const QString &request);
-	bool isCommand(const QString &request);
 	bool isListening();
 
 	Vocabulary* vocabulary() const;
 
+	QString tryRecorgnizeCommand(const QString &text);
+	bool doCommand(const QString &command);
 
 public slots:
 	void payAttention();
@@ -33,7 +38,6 @@ private:
     bool m_attention;
 	QTimer m_attentionTimer;
 	Vocabulary* m_pVocabulary;
-
 };
 
 #endif // BRAIN_H
