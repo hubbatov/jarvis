@@ -3,6 +3,18 @@ TEMPLATE = app
 QT += qml quick network multimedia xml
 CONFIG += c++11
 
+HEADERS += \
+    voiceengine.h \
+    earsengine.h \
+    jarvis.h \
+    ears.h \
+    configuration.h \
+    brain.h \
+    voice.h \
+    vocabulary.h \
+    searchers/basesearcher.h \
+    searchers/wikipediasearcher.h
+
 SOURCES += main.cpp \
     voiceengine.cpp \
     earsengine.cpp \
@@ -11,7 +23,8 @@ SOURCES += main.cpp \
     configuration.cpp \
     brain.cpp \
     voice.cpp \
-    vocabulary.cpp
+    vocabulary.cpp \
+    searchers/wikipediasearcher.cpp
 
 RESOURCES += qml.qrc
 
@@ -36,13 +49,3 @@ DEFINES += QT_DEPRECATED_WARNINGS
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-HEADERS += \
-    voiceengine.h \
-    earsengine.h \
-    jarvis.h \
-    ears.h \
-    configuration.h \
-    brain.h \
-    voice.h \
-    vocabulary.h

@@ -9,9 +9,18 @@ public:
 
 	static void checkConfig();
 
-	static QString language();
-	static QString apiKey();
+	static QString speechLanguage();
+	static QString speechQuery();
+	static QString speechKey();
 	static int attentionSeconds();
+
+	static QString searchQuery();
+	static QString searchKey();
+	static QString searchUser();
+
+	static QString wikipediaQuery();
+	static QString wikipediaWhoPrefix();
+	static QString wikipediaWhatPrefix();
 
 	static void fetchConfiguration();
 	static void destroy();

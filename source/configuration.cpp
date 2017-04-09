@@ -36,7 +36,9 @@ void Configuration::checkConfig(){
 	QFile conf(pathToConfig);
 	if(!conf.exists()){
 		conf.open(QIODevice::WriteOnly);
-		conf.write(QByteArray("[api]\n"));
+		conf.write(QByteArray("[speech]\n"));
+		conf.write(QByteArray("[search]\n"));
+		conf.write(QByteArray("[wikipedia]\n"));
 		conf.write(QByteArray("[jarvis-names]\n"));
 		conf.write(QByteArray("[your-names]\n"));
 		conf.write(QByteArray("[greetings]\n"));
@@ -50,22 +52,64 @@ void Configuration::checkConfig(){
 	}
 }
 
-QString Configuration::language(){
+QString Configuration::speechLanguage(){
 	if(m_settings)
-		return m_settings->value("api/language").toString();
+		return m_settings->value("speech/language").toString();
 	return QString();
 }
 
-QString Configuration::apiKey(){
+QString Configuration::speechQuery(){
 	if(m_settings)
-		return m_settings->value("api/key").toString();
+		return m_settings->value("speech/query").toString();
+	return QString();
+}
+
+QString Configuration::speechKey(){
+	if(m_settings)
+		return m_settings->value("speech/apiKey").toString();
 	return QString();
 }
 
 int Configuration::attentionSeconds(){
 	if(m_settings)
-		return m_settings->value("api/attention").toInt();
+		return m_settings->value("speech/attention").toInt();
 	return 60;
+}
+
+QString Configuration::searchQuery(){
+	if(m_settings)
+		return m_settings->value("search/query").toString();
+	return QString();
+}
+
+QString Configuration::searchKey(){
+	if(m_settings)
+		return m_settings->value("search/apiKey").toString();
+	return QString();
+}
+
+QString Configuration::searchUser(){
+	if(m_settings)
+		return m_settings->value("search/user").toString();
+	return QString();
+}
+
+QString Configuration::wikipediaQuery(){
+	if(m_settings)
+		return m_settings->value("wikipedia/query").toString();
+	return QString();
+}
+
+QString Configuration::wikipediaWhoPrefix(){
+	if(m_settings)
+		return m_settings->value("wikipedia/who").toString();
+	return QString();
+}
+
+QString Configuration::wikipediaWhatPrefix(){
+	if(m_settings)
+		return m_settings->value("wikipedia/what").toString();
+	return QString();
 }
 
 void Configuration::fetchConfiguration(){

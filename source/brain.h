@@ -8,6 +8,8 @@
 #include <QNetworkRequest>
 #include <QNetworkAccessManager>
 
+#include "searchers/wikipediasearcher.h"
+
 class Vocabulary;
 
 class Brain : public QNetworkAccessManager {
@@ -25,7 +27,11 @@ public:
 	Vocabulary* vocabulary() const;
 
 	QString tryRecorgnizeCommand(const QString &text);
+
 	bool doCommand(const QString &command);
+	bool doQuery(const QString &command);
+
+	WikipediaSearcher* wikiSearcher() const { return m_pWikiSearcher; }
 
 public slots:
 	void payAttention();
@@ -38,6 +44,8 @@ private:
     bool m_attention;
 	QTimer m_attentionTimer;
 	Vocabulary* m_pVocabulary;
+
+	WikipediaSearcher* m_pWikiSearcher;
 };
 
 #endif // BRAIN_H

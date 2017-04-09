@@ -1,4 +1,6 @@
 #include <QDebug>
+#include <QEventLoop>
+#include <QDomDocument>
 
 #include "brain.h"
 #include "vocabulary.h"
@@ -8,6 +10,8 @@ Brain::Brain(QObject *parent) : QNetworkAccessManager(parent){
 	m_pVocabulary = new Vocabulary;
 	m_attentionTimer.setSingleShot(true);
 	connect(&m_attentionTimer, SIGNAL(timeout()), this, SLOT(sleep()));
+
+	m_pWikiSearcher = new WikipediaSearcher(this);
 }
 
 Brain::~Brain(){
@@ -90,6 +94,23 @@ bool Brain::doCommand(const QString &command){
 		QByteArray data;
 
 		QNetworkReply* reply = post(request, data);
+		return true;
+	}
+
+	return false;
+}
+
+bool Brain::doQuery(const QString &command){
+	QStringList requests = toRequests(command);
+	if(requests.isEmpty()) return false;
+
+	QString text = requests.first();
+
+	if(text.startsWith(Configuration::wikipediaWhoPrefix())){
+		m_pWikiSearcher->search(text.remove(Configuration::wikipediaWhoPrefix()));
+		return true;
+	}else if(text.startsWith(Configuration::wikipediaWhatPrefix())){
+		m_pWikiSearcher->search(text.remove(Configuration::wikipediaWhatPrefix()));
 		return true;
 	}
 

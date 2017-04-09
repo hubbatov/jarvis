@@ -21,6 +21,7 @@ public:
 
 private slots:
 	void reactionOnText(const QString &text);
+	void sayText(const QString &text);
 
 private:
 	void createEars();

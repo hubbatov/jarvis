@@ -29,7 +29,7 @@ Ears::~Ears(){
 }
 
 void Ears::soundDetected(){
-	if(m_pEarsEngine->level() > 0.5 && m_pRecorder->state() != QAudioRecorder::RecordingState){
+	if(m_pEarsEngine->level() > 0.9 && m_pRecorder->state() != QAudioRecorder::RecordingState){
 		qDebug() << "Please, say something";
 		m_pRecorder->record();
 		QString path = QString("%1/.jarvis/request.wav").arg(QDir::homePath());

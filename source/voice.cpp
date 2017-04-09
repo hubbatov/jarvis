@@ -28,8 +28,8 @@ void Voice::recognize(const QString &filename){
 
 	const QUrl requestUrl(url
 						  .arg(uuid)
-						  .arg(Configuration::language())
-						  .arg(Configuration::apiKey()));
+						  .arg(Configuration::speechLanguage())
+						  .arg(Configuration::speechKey()));
 
 	QNetworkRequest req(requestUrl);
 	req.setHeader(QNetworkRequest::ContentTypeHeader, contentType);

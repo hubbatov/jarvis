@@ -45,13 +45,18 @@ void Jarvis::reactionOnText(const QString &text){
 		if(!command.isEmpty()){
 			if(m_pBrain->doCommand(command)){
 				m_pVoice->say(m_pBrain->vocabulary()->success());
-			}else{
+			}else
 				m_pVoice->say(m_pBrain->vocabulary()->fail());
-			}
 		}else{
-			m_pVoice->say(m_pBrain->vocabulary()->error());
+			if(!m_pBrain->doQuery(text))
+				m_pVoice->say(m_pBrain->vocabulary()->error());
 		}
 	}
+}
+
+void Jarvis::sayText(const QString &text){
+	qDebug() << "Say" << text;
+	m_pVoice->say(text);
 }
 
 void Jarvis::createEars(){
@@ -66,5 +71,6 @@ void Jarvis::createVoice(){
 
 void Jarvis::createBrain(){
 	m_pBrain = new Brain(this);
+	connect(m_pBrain->wikiSearcher(), SIGNAL(resultReceived(QString)), this, SLOT(sayText(QString)));
 }
 
