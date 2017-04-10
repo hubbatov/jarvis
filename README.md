@@ -13,12 +13,12 @@
 	[speech]
 	language=ru-RU
 	query=https://tts.voicetech.yandex.net/generate?text=%1&format=mp3&lang=%2&emotion=good&speaker=zahar&key=%3
-	apiKey=1c1ff0ba-ea6d-4aa2-a326-7c223634a686
+	apiKey=***
 	attention=60
 
 	[search]
 	query=https://yandex.ru/search/xml?user=%1&key=%2&query=%3
-	apiKey=03.448641548:2e5e5053b80e4a1b25f0222131f3cd34
+	apiKey=***
 	user=hubbatov-rustem
 
 	[wikipedia]
